@@ -14,12 +14,11 @@ dotenv.config();
 // app.use('/', routes)
 
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+    mongoose.connect(process.env.MONGO_URI)
+    .then(() => {console.log(`Listening on port ${port}`);})
+    .catch((error) => {
+        console.log(error);
+    });
 })
 
-//connect
-// mongoose.connect(process.env.MONGO_URI)
-//     .then(() => {})
-//     .catch((error) => {
-//         console.log(error);
-//     });
+
