@@ -16,9 +16,7 @@ export default function LoginCard() {
         <Pressable className="bg-sky-600 rounded-md items-center py-2">
           <Text className="text-white text-lg">Login</Text>
         </Pressable>
-        {/* <Button title="Login"/> */}
       </View>
-      
     </View>
   );
 }
