@@ -13,7 +13,7 @@ export default function LoginCard({navigation}) {
         <TextInput></TextInput>
       </View>
       <View className="pt-20 rounded-lg">
-        <Pressable className="bg-sky-600 rounded-md items-center py-2" onPress={() => navigation.navigate('Test')}>
+        <Pressable className="bg-sky-600 rounded-md items-center py-2" onPress={() => navigation.navigate('Dashboard')}>
           <Text className="text-white text-lg">Login</Text>
         </Pressable>
       </View>
