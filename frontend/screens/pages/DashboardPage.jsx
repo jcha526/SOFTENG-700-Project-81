@@ -11,7 +11,7 @@ export default function LoginPage({ navigation }) {
         </Text>
       </View>
       <View className="mt-8">
-        <DashboardPatientCard></DashboardPatientCard>
+        <DashboardPatientCard navigation={navigation}></DashboardPatientCard>
         <DashboardPatientCard></DashboardPatientCard>
         <DashboardPatientCard></DashboardPatientCard>
         <DashboardPatientCard></DashboardPatientCard>

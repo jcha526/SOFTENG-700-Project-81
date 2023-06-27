@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginPage from "./screens/pages/LoginPage";
 import TestPage from "./screens/pages/TestPage";
 import DashboardPage from "./screens/pages/DashboardPage";
+import ProfilePage from "./screens/pages/ProfilePage";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,11 @@ export default function App() {
         <Stack.Screen
           name="Dashboard"
           component={DashboardPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={ProfilePage}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
