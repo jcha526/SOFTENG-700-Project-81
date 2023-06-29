@@ -1,4 +1,5 @@
 #include "dw3000.h"
+#include <WiFi.h>
 
 #define PIN_RST 27
 #define PIN_IRQ 34
@@ -14,6 +15,11 @@
 #define RESP_MSG_TS_LEN 4
 #define POLL_TX_TO_RESP_RX_DLY_UUS 240
 #define RESP_RX_TIMEOUT_UUS 400
+
+const char *ssid = "Makerfabs";
+const char *password = "20160704";
+const char *host = "192.168.1.103";
+WiFiClient client;
 
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
@@ -42,6 +48,17 @@ extern dwt_txconfig_t txconfig_options;
 
 void setup()
 {
+  // WiFi Connection
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to Wifi… ");
+  }
+  Serial.println("Wifi connected");
+  delay(2000);
+
   UART_init();
 
   spiBegin(PIN_IRQ, PIN_RST);
@@ -178,4 +195,13 @@ void loop()
 
   /* Execute a delay between ranging exchanges. */
   Sleep(RNG_DELAY_MS);
+}
+
+void send_udp(String *msg_json)
+{
+    if (client.connected())
+    {
+        client.print(*msg_json);
+        Serial.println("UDP send");
+    }
 }
