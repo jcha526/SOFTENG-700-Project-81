@@ -68,6 +68,14 @@ void setup()
     Serial.println("Connecting to Wifi… ");
   }
   Serial.println("Wifi connected");
+
+  if (client.connect(host, 80)){
+    Serial.println("Success");
+    client.print(String("GET /") + " HTTP/1.1\r\n" +
+                  "Host: " + host + "\r\n" +
+                  "Connection: close\r\n" +
+                  "\r\n");
+  }
   delay(1000);
 
   while (!dwt_checkidlerc()) // Need to make sure DW IC is in IDLE_RC before proceeding
