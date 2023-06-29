@@ -215,7 +215,7 @@ void send_udp(String *msg_json)
 
 void createJson(String *s) {
   // std::string jsonString = "{\"links\":[{\"A\":\"Y\",\"R\":\"" + anchorYRange + "\"},{\"A\":\"Z\",\"R\":\"" + anchorZRange + "\"}]}";
-  
+  *s = "{\"links\":[";
 
   char link_json[50];
   sprintf(link_json, "{\"A\":\"Y\",\"R\":\"%.2f\"},{\"A\":\"Z\",\"R\":\"%.2f\"}]}", anchorYRange, anchorZRange);
