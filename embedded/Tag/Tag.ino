@@ -196,6 +196,7 @@ void loop()
     anchorZRange = distance;
     key = 'Y';
     createJson(&jsonString);
+    send_udp(&jsonString);
   }
 
   Serial.println(key);
@@ -214,7 +215,6 @@ void send_udp(String *msg_json)
 }
 
 void createJson(String *s) {
-  // std::string jsonString = "{\"links\":[{\"A\":\"Y\",\"R\":\"" + anchorYRange + "\"},{\"A\":\"Z\",\"R\":\"" + anchorZRange + "\"}]}";
   *s = "{\"links\":[";
 
   char link_json[50];
