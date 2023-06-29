@@ -44,10 +44,21 @@ static uint8_t rx_buffer[20];
 static uint32_t status_reg = 0;
 static double tof;
 static double distance;
+static double anchorYRange;
+static double anchorZRange;
+static String jsonString = "";
 extern dwt_txconfig_t txconfig_options;
+
 
 void setup()
 {
+  UART_init();
+
+  spiBegin(PIN_IRQ, PIN_RST);
+  spiSelect(PIN_SS);
+
+  delay(2); // Time needed for DW3000 to start up (transition from INIT_RC to IDLE_RC, or could wait for SPIRDY event)
+
   // WiFi Connection
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -57,14 +68,7 @@ void setup()
     Serial.println("Connecting to Wifi… ");
   }
   Serial.println("Wifi connected");
-  delay(2000);
-
-  UART_init();
-
-  spiBegin(PIN_IRQ, PIN_RST);
-  spiSelect(PIN_SS);
-
-  delay(2); // Time needed for DW3000 to start up (transition from INIT_RC to IDLE_RC, or could wait for SPIRDY event)
+  delay(1000);
 
   while (!dwt_checkidlerc()) // Need to make sure DW IC is in IDLE_RC before proceeding
   {
@@ -186,9 +190,12 @@ void loop()
   }
 
   if (key == 'Y') {
+    anchorYRange = distance;
     key = 'Z';
   } else {
+    anchorZRange = distance;
     key = 'Y';
+    createJson(&jsonString);
   }
 
   Serial.println(key);
@@ -204,4 +211,15 @@ void send_udp(String *msg_json)
         client.print(*msg_json);
         Serial.println("UDP send");
     }
+}
+
+void createJson(String *s) {
+  // std::string jsonString = "{\"links\":[{\"A\":\"Y\",\"R\":\"" + anchorYRange + "\"},{\"A\":\"Z\",\"R\":\"" + anchorZRange + "\"}]}";
+  
+
+  char link_json[50];
+  sprintf(link_json, "{\"A\":\"Y\",\"R\":\"%.2f\"},{\"A\":\"Z\",\"R\":\"%.2f\"}]}", anchorYRange, anchorZRange);
+  *s += link_json;
+
+  Serial.println(jsonString);
 }
