@@ -198,10 +198,16 @@ void loop()
   }
 
   if (key == 'Y') {
-    anchorYRange = distance;
+    if (distance != -10) {
+      anchorYRange = distance;
+      distance = -10;
+    }
     key = 'Z';
   } else {
-    anchorZRange = distance;
+    if (distance != -10) {
+      anchorZRange = distance;
+      distance = -10;
+    }
     key = 'Y';
     createJson(&jsonString);
     send_udp(&jsonString);

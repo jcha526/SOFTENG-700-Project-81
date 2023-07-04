@@ -13,7 +13,7 @@ sock.bind((UDP_IP, UDP_PORT))
 sock.listen(1)  # 接收的连接数
 data, addr = sock.accept()
 
-distance_a1_a2 = 3.0
+distance_a1_a2 = 7.0
 meter2pixel = 100
 range_offset = 0.9
 
@@ -102,7 +102,7 @@ def clean(t=turtle):
 
 
 def draw_ui(t):
-    write_txt(-300, 250, "UWB Positon", "black",  t, f=('Arial', 32, 'normal'))
+    write_txt(-300, 250, "UWB Position", "black",  t, f=('Arial', 32, 'normal'))
     fill_rect(-400, 200, 800, 40, "black", t)
     write_txt(-50, 205, "WALL", "yellow",  t, f=('Arial', 24, 'normal'))
 
@@ -115,7 +115,7 @@ def draw_uwb_anchor(x, y, txt, range, t):
 
 
 def draw_uwb_tag(x, y, txt, t):
-    pos_x = -250 + int(x * meter2pixel)
+    pos_x = -400 + int(x * meter2pixel)
     pos_y = 150 - int(y * meter2pixel)
     r = 20
     fill_cycle(pos_x, pos_y, r, "blue", t)
@@ -153,7 +153,7 @@ def tag_pos(a, b, c):
     x = b * cos_a
     y = b * cmath.sqrt(1 - cos_a * cos_a)
 
-    return round(x.real, 1), round(y.real, 1)
+    return round(x.real, 2), round(y.real, 2)
 
 
 def uwb_range_offset(uwb_range):
@@ -183,17 +183,17 @@ def main():
         list = read_data()
 
         for one in list:
-            if one["A"] == "1782":
+            if one["A"] == "Z":
                 clean(t_a1)
                 a1_range = uwb_range_offset(float(one["R"]))
-                draw_uwb_anchor(-250, 150, "A1782(0,0)", a1_range, t_a1)
+                draw_uwb_anchor(-400, 150, "Z(0,0)", a1_range, t_a1)
                 node_count += 1
 
-            if one["A"] == "1783":
+            if one["A"] == "Y":
                 clean(t_a2)
                 a2_range = uwb_range_offset(float(one["R"]))
-                draw_uwb_anchor(-250 + meter2pixel * distance_a1_a2,
-                                150, "A1783(" + str(distance_a1_a2)+")", a2_range, t_a2)
+                draw_uwb_anchor(-400 + meter2pixel * distance_a1_a2,
+                                150, "Y(" + str(distance_a1_a2)+")", a2_range, t_a2)
                 node_count += 1
 
         if node_count == 2:
