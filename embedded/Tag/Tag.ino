@@ -1,5 +1,6 @@
 #include "dw3000.h"
 #include <WiFi.h>
+#include <ArduinoHttpClient.h>
 
 #define PIN_RST 27
 #define PIN_IRQ 34
@@ -16,11 +17,14 @@
 #define POLL_TX_TO_RESP_RX_DLY_UUS 240
 #define RESP_RX_TIMEOUT_UUS 400
 
+// Add your own details below
 const char *ssid = "Makerfabs";
 const char *password = "20160704";
-const char *host = "192.168.1.103";
-WiFiClient client;
+char serverAddress[] = "0.0.0.0";
+int port = 3000;
+WiFiClient wifi;
 
+HttpClient client = HttpClient(wifi, serverAddress, port);
 /* Default communication configuration. We use default non-STS DW mode. */
 static dwt_config_t config = {
     5,                /* Channel number. */
@@ -69,13 +73,6 @@ void setup()
   }
   Serial.println("Wifi connected");
 
-  if (client.connect(host, 80)){
-    Serial.println("Success");
-    client.print(String("GET /") + " HTTP/1.1\r\n" +
-                  "Host: " + host + "\r\n" +
-                  "Connection: close\r\n" +
-                  "\r\n");
-  }
   delay(1000);
 
   while (!dwt_checkidlerc()) // Need to make sure DW IC is in IDLE_RC before proceeding
@@ -211,6 +208,7 @@ void loop()
     key = 'Y';
     createJson(&jsonString);
     send_udp(&jsonString);
+    Sleep(5000);
   }
 
   Serial.println(key);
@@ -221,11 +219,19 @@ void loop()
 
 void send_udp(String *msg_json)
 {
-    if (client.connected())
-    {
-        client.print(*msg_json);
-        Serial.println("UDP send");
-    }
+    Serial.println("making POST request");
+    String contentType = "application/json";
+
+    client.post("/api/data/create", contentType, jsonString);
+
+    // read the status code and body of the response
+    int statusCode = client.responseStatusCode();
+    String response = client.responseBody();
+
+    Serial.print("Status code: ");
+    Serial.println(statusCode);
+    Serial.print("Response: ");
+    Serial.println(response);
 }
 
 void createJson(String *s) {
