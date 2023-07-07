@@ -24,6 +24,15 @@ router.get("/latest", async (req, res) => {
   }
 });
 
+router.get("/history", async (req, res) => {
+  try {
+    const data = await Data.find().sort({ _id: -1 }).limit(10);
+    res.status(200).json(data);
+  } catch {
+    res.status(400).json({ message: "An error occured" });
+  }
+});
+
 router.get("/", async (req, res) => {
   res.status(200);
 });
