@@ -4,6 +4,7 @@ import LoginPage from "./screens/pages/LoginPage";
 import TestPage from "./screens/pages/TestPage";
 import DashboardPage from "./screens/pages/DashboardPage";
 import ProfilePage from "./screens/pages/ProfilePage";
+import OverviewPage from "./screens/pages/OverviewPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,11 @@ export default function App() {
         <Stack.Screen
           name="Profile"
           component={ProfilePage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Overview"
+          component={OverviewPage}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

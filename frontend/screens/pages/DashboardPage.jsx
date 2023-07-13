@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 import DashboardPatientCard from "../components/DashboardPatientCard";
 
-export default function LoginPage({ navigation }) {
+export default function DashboardPage({ navigation }) {
   return (
     <View>
       <View className="bg-sky-600 h-1/5 flex-auto items-center justify-center">
@@ -19,7 +19,7 @@ export default function LoginPage({ navigation }) {
 
       <View className="flex-auto items-center justify-center mt-20">
         <Pressable className="bg-sky-600 rounded-md items-center py-2 w-2/3">
-          <Text className="text-white text-lg">Overview</Text>
+          <Text className="text-white text-lg" onPress={() => navigation.navigate('Overview')}>Overview</Text>
         </Pressable>
         <Pressable className="mt-4 bg-sky-600 rounded-md items-center py-2 w-2/3">
           <Text className="text-white text-lg">Incidents</Text>
