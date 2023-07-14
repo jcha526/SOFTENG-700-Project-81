@@ -1,6 +1,7 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import Map from "../components/Map";
+import DashboardPatientCard from "../components/DashboardPatientCard";
 
 export default function OverviewPage({ navigation }) {
   return (
@@ -11,6 +12,8 @@ export default function OverviewPage({ navigation }) {
         </Text>
       </View>
       <Map></Map>
+      <Text className="text-center text-xl">Displaying live location for:</Text>
+      <DashboardPatientCard></DashboardPatientCard>
     </View>
   );
 }

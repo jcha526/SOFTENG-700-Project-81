@@ -29,13 +29,11 @@ export default function Map() {
     const distZ = 0.66;
 
     const [x, y] = calc_pos(distZ,distY,distanceBetweenAnchors);
-
-    console.log(calc_pos(distZ,distY,distanceBetweenAnchors));
   return (
     <View className="w-vh flex justify-center items-center mt-4">
         <View className="h-96 w-96 bg-slate-400 rounded-lg border-2">
             <ImageBackground source={floorplan} style={{width: '100%', height: '100%'}} imageStyle={{ borderRadius: 6}}>
-                <Image source={greendot} style={{width: 15, height: 15, marginLeft: boxWidth*x, marginTop: boxWidth*y}} ></Image>
+                <Image source={greendot} style={{width: 15, height: 15, marginLeft: boxWidth*x, marginTop: boxWidth*y}}></Image>
             </ImageBackground>
             
         </View>
