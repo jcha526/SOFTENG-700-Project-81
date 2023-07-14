@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
-import DashboardPatientCard from "../components/DashboardPatientCard";
+import Map from "../components/Map";
 
 export default function OverviewPage({ navigation }) {
   return (
@@ -10,9 +10,7 @@ export default function OverviewPage({ navigation }) {
           Overview
         </Text>
       </View>
-      <View className="mt-8">
-        
-      </View>
+      <Map></Map>
     </View>
   );
 }
